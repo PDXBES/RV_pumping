@@ -1,5 +1,6 @@
 import config
 import arcpy
+import os
 
 
 def get_field_value_as_dict(input, value_field):
@@ -26,16 +27,13 @@ def get_and_assign_field_value(source, source_field, target, target_field):
 # -------------------------------------------------------------------------
 print("STARTING PROCESS to fill out location fields")
 
-intersecting_list = [config.RV_pumping_fs, config.sextants, config.zipcodes, config.wsheds, config.nhoods, config.basins]
-print("intersecting all features")
-sect = arcpy.analysis.Intersect(intersecting_list, r"memory\sect", "ALL")
-
-#field_dict = {source_field:target_field} eg the field in the zipcode layer:the field in the feature service
-field_dict = {'ZIPCODE_1':'Zipcode','Sextant_1':'Sextant','NAME_1':'Neighborhood', 'WATERSHED_1': 'Watershed', 'BASIN_ID_1': 'Basin_ID'}
-
-for key in field_dict.keys():
-    print("filling field - " + str(field_dict[key]))
-    get_and_assign_field_value(sect, key, config.RV_pumping_fs, field_dict[key])
+for key, value in config.fc_field_dict.items():
+    intersecting_list = (config.RV_pumping_fs, key)
+    print("intersecting features - " + str(value[1]))
+    in_memory_name = r"memory\sect_" + value[1]
+    sect = arcpy.analysis.Intersect(intersecting_list, in_memory_name, "ALL")
+    print("filling field - " + str(value[1]))
+    get_and_assign_field_value(sect, value[0], config.RV_pumping_fs, value[1])
 
 print("filling Age")
 with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['created_date', 'DOB', 'Age']) as cursor:

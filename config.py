@@ -14,3 +14,9 @@ nhoods = EGH_PUBLIC + r"\EGH_PUBLIC.ARCMAP_ADMIN.neighborhoods_pdx"
 basins = EGH_PUBLIC + r"\EGH_PUBLIC.ARCMAP_ADMIN.sewer_basins_bes_pdx"
 
 RV_pumping_fs = "https://services.arcgis.com/quVN97tn06YNGj9s/arcgis/rest/services/RV_pumping_sites/FeatureServer/0"
+
+fc_field_dict = {zipcodes:('ZIPCODE_1','Zipcode'),
+                 sextants:('Sextant_1','Sextant'),
+                 nhoods:('NAME','Neighborhood'),
+                 wsheds:('WATERSHED_1', 'Watershed'),
+                 basins:('BASIN_ID_1', 'Basin_ID')}
