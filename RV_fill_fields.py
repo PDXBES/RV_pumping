@@ -48,7 +48,7 @@ for key, value in config.fc_field_dict.items():
 log_obj.info("- filling Age".format())
 with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['created_date', 'DOB', 'Age']) as cursor:
     for row in cursor:
-        if row[1] is not None:
+        if row[0] is not None and row[1] is not None:
             row[2] = row[0].year - row[1].year
         cursor.updateRow(row)
 
