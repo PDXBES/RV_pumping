@@ -11,6 +11,7 @@ import os
 log_obj = utility.Logger(config.log_file)
 
 log_obj.info("STARTING PROCESS - fill out location fields - ".format())
+#print("starting")
 
 for key, value in config.fc_field_dict.items():
     intersecting_list = (config.RV_pumping_fs, key)
@@ -24,7 +25,7 @@ for key, value in config.fc_field_dict.items():
     target_key_field = "OBJECTID"
     utility.get_and_assign_field_value(sect, source_key_field, value[0], config.RV_pumping_fs, target_key_field, value[1])
 
-log_obj.info("filling field - Age".format())
+log_obj.info("filling field - Age (Survey Date - DOB)".format())
 with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date', 'DOB', 'Age']) as cursor:
     for row in cursor:
         if row[0] is not None and row[1] is not None:
@@ -32,3 +33,4 @@ with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date', 'DOB', 'Age']) 
         cursor.updateRow(row)
 
 log_obj.info(" - fill out location fields - PROCESS COMPLETE".format())
+#print("done")
