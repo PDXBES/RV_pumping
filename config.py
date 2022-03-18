@@ -3,7 +3,6 @@ import os
 
 
 connections = r"\\besfile1\CCSP\03_WP2_Planning_Support_Tools\03_RRAD\CCSP_Data_Management_ToolBox\connection_files"
-
 EGH_PUBLIC = os.path.join(connections, "GISDB1.EGH_PUBLIC.sde")
 
 #reference connections
@@ -29,4 +28,5 @@ fc_field_dict = {
                  ,block_groups:('FIPS', 'BlockGroup_ID')
                 }
 
+invoice_output = r"\\besfile1\ISM_PROJECTS\Work_Orders\WO_9857_A_Chomowicz\Invoices"
 log_file = r"\\besapp4\GIS\Scripts\Python\Production\RV_pumping\RV_pumping_log"
