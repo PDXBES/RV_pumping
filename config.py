@@ -28,5 +28,6 @@ fc_field_dict = {
                  ,block_groups:('FIPS', 'BlockGroup_ID')
                 }
 
-invoice_output = r"\\besfile1\ISM_PROJECTS\Work_Orders\WO_9857_A_Chomowicz\Invoices"
+invoice_output = r"\\besfile1\ISM_PROJECTS\Work_Orders\WO_9857_A_Chomowicz\Reports\Invoices"
+quarterly_output = r"\\besfile1\ISM_PROJECTS\Work_Orders\WO_9857_A_Chomowicz\Reports\Quarterly"
 log_file = r"\\besapp4\GIS\Scripts\Python\Production\RV_pumping\RV_pumping_log"

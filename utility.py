@@ -64,14 +64,16 @@ def create_remove_list(existing_names_and_required, field_list):
             remove_field_list.append(key)
     return remove_field_list
 
-def format_start_date(month, year):
+# create start date for month specified (1st of input month)
+def format_monthly_start_date(month, year):
     if month <= 9:
         date = '{}-0{}-01'.format(year, month)
     else:
         date = '{}-{}-01'.format(year, month)
     return date
 
-def format_end_date(month, year):
+# create end date for month specifed (1st of month following input month)
+def format_monthly_end_date(month, year):
     if month + 1 > 12:
         month = 1
         year = year + 1
@@ -87,3 +89,26 @@ def format_end_date(month, year):
         else:
             date = '{}-{}-01'.format(year, month)
         return date
+
+# create start date of 3 months prior to the month specified (eg 4/2022 returns 1/1/2022)
+def format_quarterly_start_date(month, year):
+    if month > 3:
+        start_month = month - 3
+        start_year = year
+    elif month == 3:
+        start_month = 12
+        start_year = year - 1
+    elif month == 2:
+        start_month = 11
+        start_year = year - 1
+    elif month == 1:
+        start_month = 10
+        start_year = year - 1
+    start_date = format_monthly_start_date(start_month, start_year)
+    return start_date
+
+# create end date of 1 month prior to the month specifiied (eg 4/2022 ruturns 4/1/2022)
+def format_quarterly_end_date(month, year):
+    end_month = month - 1
+    end_date = format_monthly_end_date(end_month, year)
+    return end_date

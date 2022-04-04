@@ -14,11 +14,11 @@ log_obj.info("STARTING PROCESS - fill out location fields - ".format())
 #print("starting")
 
 for key, value in config.fc_field_dict.items():
-    intersecting_list = (config.RV_pumping_fs, key)
+    intersecting_list = [config.RV_pumping_fs, key]
     msg1 = "intersecting features - " + str(value[1])
     log_obj.info(msg1.format())
     in_memory_name = r"in_memory\sect_" + value[1]
-    sect = arcpy.analysis.Intersect(intersecting_list, in_memory_name, "ALL")
+    sect = arcpy.analysis.PairwiseIntersect(intersecting_list, in_memory_name, "ALL")
     msg2 = "filling field - " + str(value[1])
     log_obj.info(msg2.format())
     source_key_field = "FID_L1RV_pumping_sites" #comes from result of intersect #fragile - L1 refers to service index number
