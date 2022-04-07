@@ -2,6 +2,7 @@ import config
 import utility
 import arcpy
 import os
+from datetime import datetime
 
 
 def create_invoice(month, year):
@@ -32,7 +33,9 @@ def create_invoice(month, year):
 #y = 2022
 #create_invoice(m, y)
 
-# in theory both of these could be setup to read current month from datetime and automatically run reports - then that could be scheduled (2nd of month, 15th of every 3rd month)
-# this provides more flexibility though
-
+#assumes this is running within month immediately following invoice report month
+now = datetime.now()
+month = now.month - 1
+year = now.year
+create_invoice(month, year)
 

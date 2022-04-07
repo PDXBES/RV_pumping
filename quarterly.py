@@ -2,6 +2,7 @@ import config
 import utility
 import arcpy
 import os
+from datetime import datetime
 
 
 def create_quarterly_report(month, year):
@@ -27,3 +28,10 @@ def create_quarterly_report(month, year):
 #m = 4
 #y = 2022
 #create_quarterly_report(m, y)
+
+#assumes this is running within month immediately following quarterly report months
+#eg Q1 report would run within April
+now = datetime.now()
+month = now.month
+year = now.year
+create_quarterly_report(month, year)
