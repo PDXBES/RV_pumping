@@ -11,7 +11,6 @@ from datetime import timedelta
 log_obj = utility.Logger(config.log_file)
 
 log_obj.info("STARTING PROCESS - FILLING FIELDS - ".format())
-#print("starting")
 
 for key, value in config.fc_field_dict.items():
     intersecting_list = [config.RV_pumping_fs, key]
@@ -40,4 +39,4 @@ with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date_PST', 'DOB', 'Age
         cursor.updateRow(row)
 
 log_obj.info(" - FILLING FIELDS - PROCESS COMPLETE".format())
-#print("done")
+
