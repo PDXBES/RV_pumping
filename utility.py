@@ -107,7 +107,7 @@ def format_quarterly_start_date(month, year):
     start_date = format_monthly_start_date(start_month, start_year)
     return start_date
 
-# create end date of 1 month prior to the month specifiied (eg 4/2022 ruturns 4/1/2022)
+# create end date of 1 month prior to the month specified (eg 4/2022 returns 4/1/2022)
 def format_quarterly_end_date(month, year):
     end_month = month - 1
     end_date = format_monthly_end_date(end_month, year)

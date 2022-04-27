@@ -32,9 +32,9 @@ with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date', 'Survey_Date_PS
         cursor.updateRow(row)
 
 log_obj.info("filling field - Age (Survey Date - DOB)".format())
-with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date_PST', 'DOB', 'Age']) as cursor:
+with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date_PST', 'DOB', 'Age', 'Data_Source']) as cursor:
     for row in cursor:
-        if row[0] is not None and row[1] is not None:
+        if row[0] is not None and row[1] is not None and row[3] == 'Invoice':
             row[2] = row[0].year - row[1].year
         cursor.updateRow(row)
 
