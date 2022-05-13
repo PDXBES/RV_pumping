@@ -19,14 +19,18 @@ def create_invoice(month, year):
     date_subset_in_memory = arcpy.CopyFeatures_management(date_subset, r"in_memory\monthly_in_memory")
     keep_list = ['Survey_Date_PST', 'Activity', 'Activity_Cost', 'Zipcode']
     utility.delete_fields(date_subset_in_memory, keep_list)
-    new_dir_name = month_year_string + "_invoice"
-    new_path = os.path.join(config.invoice_output, new_dir_name)
-    os.mkdir(new_path)
-    arcpy.conversion.TableToExcel(date_subset_in_memory, os.path.join(new_path, month_year_string + "_full.xls"), '#',
+
+    new_dir_name = month_year_string + "_{}".format('invoice')
+    new_dir = os.path.join(config.invoice_output, new_dir_name)
+    os.mkdir(new_dir)
+
+    arcpy.conversion.TableToExcel(date_subset_in_memory, os.path.join(new_dir, month_year_string + "_full.xls"), '#',
                                   'DESCRIPTION')
     sums = arcpy.analysis.Statistics(date_subset_in_memory, r"in_memory\sums", [['Activity_Cost', 'SUM']], 'Activity')
-    arcpy.conversion.TableToExcel(sums, os.path.join(new_path, month_year_string + "_sums.xls"), '#', 'DESCRIPTION')
-    log_obj.info("END PROCESS - invoice complete - output at ...{}".format(new_path))
+    arcpy.conversion.TableToExcel(sums, os.path.join(new_dir, month_year_string + "_sums.xls"), '#', 'DESCRIPTION')
+    log_obj.info("END PROCESS - invoice complete - output at ...{}".format(new_dir))
+
+
 
 #for manual run/ testing
 #m = 3

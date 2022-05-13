@@ -6,12 +6,12 @@ from datetime import datetime
 
 arcpy.env.overwriteOutput = True
 
-def create_last_pump_by_zipcode():
+def create_last_patrol_by_zipcode():
     log_obj = utility.Logger(config.log_file)
     log_obj.info("STARTING PROCESS - GENERATE LAST PUMP BY ZIPCODE - ".format())
 
     log_obj.info(" - generate max datetime per zipcode - ".format())
-    sums = arcpy.analysis.Statistics(config.RV_pumping_fs, r"in_memory\sums", [['Survey_Date_PST', 'MAX']], 'Zipcode')
+    sums = arcpy.analysis.Statistics(config.patrols_copy, r"in_memory\sums", [['Survey_Date_PST', 'MAX']], 'Zipcode')
 
     arcpy.AddField_management(sums, 'days_delta', 'SHORT')
     arcpy.AddField_management(sums, 'ZIPCODE_string', 'TEXT')
@@ -46,9 +46,11 @@ def create_last_pump_by_zipcode():
                 row[0] = 9999
             cursor.updateRow(row)
 
+    # output to BESDBPROD1.GIS_TRANSFER10 for scheduled nightly - overwrite output
     log_obj.info(" - save result to disk - {}".format(config.last_pump_report_gdb))
-    arcpy.CopyFeatures_management(zipcodes_copy, os.path.join(config.last_pump_report_gdb, "last_pump_by_zipcode"))
+    #arcpy.CopyFeatures_management(zipcodes_copy, os.path.join(config.last_pump_report_gdb, "last_pump_by_zipcode"))
+    arcpy.CopyFeatures_management(zipcodes_copy, os.path.join(config.GIS_TRANSFER10, "last_patrol_by_zipcode"))
 
     log_obj.info(" - GENERATE LAST PUMP BY ZIPCODE - PROCESS COMPLETE".format())
 
-create_last_pump_by_zipcode()
+create_last_patrol_by_zipcode()

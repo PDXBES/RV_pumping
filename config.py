@@ -4,6 +4,7 @@ import os
 
 connections = r"\\besfile1\CCSP\03_WP2_Planning_Support_Tools\03_RRAD\CCSP_Data_Management_ToolBox\connection_files"
 EGH_PUBLIC = os.path.join(connections, "GISDB1.EGH_PUBLIC.sde")
+GIS_TRANSFER10 = os.path.join(connections, "BESDBPROD1.GIS_TRANSFER10.GIS.sde")
 
 #reference connections
 sextants = EGH_PUBLIC + r"\EGH_Public.ARCMAP_ADMIN.sextants_pdx"
@@ -18,6 +19,9 @@ password = "PurpleHawk23"
 arcpy.SignInToPortal("https://pdx.maps.arcgis.com/", username, password)
 RV_pumping_fs = "https://services.arcgis.com/quVN97tn06YNGj9s/arcgis/rest/services/RV_pumping_sites/FeatureServer/1"
 # index seems fragile - it changed on me from 0 to 1 after republishing/updating the service - didn't think doing that should change it
+
+patrols = arcpy.MakeFeatureLayer_management(RV_pumping_fs, r"in_memory\patrols", "Activity = 'Patrol'")
+patrols_copy = arcpy.CopyFeatures_management(patrols, r"in_memory\patrols_copy")
 
 fc_field_dict = {
                  zipcodes:('ZIPCODE_1','Zipcode')

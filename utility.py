@@ -2,6 +2,8 @@ import logging
 import sys, os
 import logging.config
 import arcpy
+import config
+from datetime import timedelta
 
 
 # https://stackoverflow.com/questions/6386698/how-to-write-to-a-file-using-the-logging-python-module
@@ -90,25 +92,54 @@ def format_monthly_end_date(month, year):
             date = '{}-{}-01'.format(year, month)
         return date
 
-# create start date of 3 months prior to the month specified (eg 4/2022 returns 1/1/2022)
+# create start date at the beginning of the previous quarter
+# assumes report will be run within the quarter following the target quarter (within Q2 for Q1, etc)
 def format_quarterly_start_date(month, year):
-    if month > 3:
-        start_month = month - 3
+    if month >= 10 and month <= 12:
+        start_month = 7
         start_year = year
-    elif month == 3:
-        start_month = 12
-        start_year = year - 1
-    elif month == 2:
-        start_month = 11
-        start_year = year - 1
-    elif month == 1:
+    elif month >= 7 and month < 10:
+        start_month = 4
+        start_year = year
+    elif month >= 4 and month < 7:
+        start_month = 1
+        start_year = year
+    elif month >= 1 and month < 4:
         start_month = 10
         start_year = year - 1
     start_date = format_monthly_start_date(start_month, start_year)
     return start_date
 
-# create end date of 1 month prior to the month specified (eg 4/2022 returns 4/1/2022)
+# create start date at the beginning of the previous quarter
+# assumes report will be run within the quarter following the target quarter (within Q2 for Q1, etc)
 def format_quarterly_end_date(month, year):
-    end_month = month - 1
-    end_date = format_monthly_end_date(end_month, year)
+    if month >= 10 and month <= 12:
+        end_month = 9
+        end_year = year
+    elif month >= 7 and month < 10:
+        end_month = 6
+        end_year = year
+    elif month >= 4 and month < 7:
+        end_month = 3
+        end_year = year
+    elif month >= 1 and month < 4:
+        end_month = 12
+        end_year = year - 1
+    end_date = format_monthly_end_date(end_month, end_year)
     return end_date
+
+def quarter_string_format(month, year):
+    if month >= 10 and month <= 12:
+        quarter = 'Q3'
+        my_year = year
+    elif month >= 7 and month < 10:
+        quarter = 'Q2'
+        my_year = year
+    elif month >= 4 and month < 7:
+        quarter = 'Q1'
+        my_year = year
+    elif month >= 1 and month < 4:
+        quarter = 'Q4'
+        my_year = year - 1
+    quarter_year = str(quarter) + "-" + str(my_year)
+    return quarter_year
