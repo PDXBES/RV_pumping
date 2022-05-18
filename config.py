@@ -35,4 +35,5 @@ fc_field_dict = {
 invoice_output = r"\\besfile1\ISM_PROJECTS\Work_Orders\WO_9857_A_Chomowicz\Reports\Invoices"
 quarterly_output = r"\\besfile1\ISM_PROJECTS\Work_Orders\WO_9857_A_Chomowicz\Reports\Quarterly"
 last_pump_report_gdb = r"\\besfile1\ISM_PROJECTS\Work_Orders\WO_9857_A_Chomowicz\Reports\LastPump_by_Zipcode\output.gdb"
+backup_gdb = r"\\besfile1\ISM_PROJECTS\Work_Orders\WO_9857_A_Chomowicz\backups\RV_pumping_fs_backups.gdb"
 log_file = r"\\besapp4\GIS\Scripts\Python\Production\RV_pumping\RV_pumping_log"
