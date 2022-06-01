@@ -47,9 +47,9 @@ def create_last_patrol_by_zipcode():
             cursor.updateRow(row)
 
     # output to BESDBPROD1.GIS_TRANSFER10 for scheduled nightly - overwrite output
-    log_obj.info(" - save result to disk - {}".format(config.last_pump_report_gdb))
-    #arcpy.CopyFeatures_management(zipcodes_copy, os.path.join(config.last_pump_report_gdb, "last_pump_by_zipcode"))
-    arcpy.CopyFeatures_management(zipcodes_copy, os.path.join(config.GIS_TRANSFER10, "last_patrol_by_zipcode"))
+    log_obj.info(" - save result to disk - {}".format(config.GIS_TRANSFER10))
+    arcpy.CopyFeatures_management(zipcodes_copy, os.path.join(config.last_pump_report_gdb, "last_patrol_by_zipcode"))
+    #arcpy.CopyFeatures_management(zipcodes_copy, os.path.join(config.GIS_TRANSFER10, "last_patrol_by_zipcode"))
 
     log_obj.info(" - GENERATE LAST PUMP BY ZIPCODE - PROCESS COMPLETE".format())
 
