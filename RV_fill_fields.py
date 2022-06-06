@@ -25,10 +25,12 @@ for key, value in config.fc_field_dict.items():
     utility.get_and_assign_field_value(sect, source_key_field, value[0], config.RV_pumping_fs, target_key_field, value[1])
 
 log_obj.info("filling field - Survey Date PST (Survey Date - 8hrs)".format())
-with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date', 'Survey_Date_PST']) as cursor:
+with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date', 'Survey_Date_PST', 'Data_Source']) as cursor:
     for row in cursor:
-        if row[0] is not None:
-            row[1] = row[0] - timedelta(hours = 8)
+        if row[0] is not None and row[2] == 'Survey':
+            row[1] = row[0] - timedelta(hours=8)
+        elif row[0] is not None and row[2] == 'Invoice':
+            row[1] = row[0]
         cursor.updateRow(row)
 
 log_obj.info("filling field - Age (Survey Date - DOB)".format())
