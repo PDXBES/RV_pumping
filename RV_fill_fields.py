@@ -25,6 +25,13 @@ for key, value in config.fc_field_dict.items():
     target_key_field = "OBJECTID"
     utility.get_and_assign_field_value(sect, source_key_field, value[0], config.RV_pumping_fs, target_key_field, value[1])
 
+log_obj.info("patching Source field (Null = Survey".format())
+with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Data_Source']) as cursor:
+    for row in cursor:
+        if row[0] is None and row[0] > datetime(2022, 3, 8):
+            row[0] = 'Survey'
+        cursor.updateRow(row)
+
 log_obj.info("filling field - Survey Date PST (Survey Date - 8hrs)".format())
 with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date', 'Survey_Date_PST', 'Data_Source']) as cursor:
     for row in cursor:
@@ -41,12 +48,6 @@ with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date_PST', 'DOB', 'Age
             row[2] = row[0].year - row[1].year
         cursor.updateRow(row)
 
-log_obj.info("patching Source field (Null = Survey".format())
-with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Data_Source']) as cursor:
-    for row in cursor:
-        if row[0] is None and row[0] > datetime(2022, 3, 8):
-            row[0] = 'Survey'
-        cursor.updateRow(row)
 
 log_obj.info(" - FILLING FIELDS - PROCESS COMPLETE".format())
 
