@@ -2,6 +2,7 @@ import config
 import utility
 import arcpy
 from datetime import timedelta
+from datetime import datetime
 
 #takes about 8 min to run
 
@@ -38,6 +39,13 @@ with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Survey_Date_PST', 'DOB', 'Age
     for row in cursor:
         if row[0] is not None and row[1] is not None and row[3] == 'Invoice':
             row[2] = row[0].year - row[1].year
+        cursor.updateRow(row)
+
+log_obj.info("patching Source field (Null = Survey".format())
+with arcpy.da.UpdateCursor(config.RV_pumping_fs, ['Data_Source']) as cursor:
+    for row in cursor:
+        if row[0] is None and row[0] > datetime(2022, 3, 8):
+            row[0] = 'Survey'
         cursor.updateRow(row)
 
 log_obj.info(" - FILLING FIELDS - PROCESS COMPLETE".format())
