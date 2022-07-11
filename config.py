@@ -17,7 +17,7 @@ block_groups = EGH_PUBLIC + r"\EGH_PUBLIC.ARCMAP_ADMIN.census_blockgroup_2010_me
 username = "DASHNEY_PDX_pyscript"
 password = "PurpleHawk23"
 arcpy.SignInToPortal("https://pdx.maps.arcgis.com/", username, password)
-RV_pumping_fs = "https://services.arcgis.com/quVN97tn06YNGj9s/arcgis/rest/services/RV_pumping_sites/FeatureServer/1"
+RV_pumping_fs = "https://services.arcgis.com/quVN97tn06YNGj9s/arcgis/rest/services/RV_pumping_sites/FeatureServer/0"
 # index seems fragile - it changed on me from 0 to 1 after republishing/updating the service - didn't think doing that should change it
 
 patrols = arcpy.MakeFeatureLayer_management(RV_pumping_fs, r"in_memory\patrols", "Activity = 'Patrol'")
